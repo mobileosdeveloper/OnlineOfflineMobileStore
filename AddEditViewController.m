@@ -91,14 +91,15 @@ NSDictionary *fields;
     internetReach = [Reachability reachabilityForInternetConnection];
     [internetReach startNotifier];
     [self updateInterfaceWithReachability:internetReach];
-
-        if (APP.offLineMode==YES) {
-            SFSmartStore *store = [SFSmartStore sharedStoreWithName:kDefaultSmartStoreName];
+    if (ContactEditFlagObj) {
+        SFSmartStore *store = [SFSmartStore sharedStoreWithName:kDefaultSmartStoreName];
+        
+        self.dataRows= [store retrieveEntries:[[NSArray alloc]initWithObjects:SoupEntryId, nil] fromSoup:@"Merchandise"];
+        if ([dataRows count]>0) {
             
-             self.dataRows= [store retrieveEntries:[[NSArray alloc]initWithObjects:SoupEntryId, nil] fromSoup:@"Merchandise"];
             if ([[dataRows valueForKey:@"FirstName"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.firstName=[[dataRows valueForKey:@"FirstName"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"LastName"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.lastName=[[dataRows valueForKey:@"LastName"] objectAtIndex:0];
@@ -111,7 +112,7 @@ NSDictionary *fields;
             }
             if ([[dataRows valueForKey:@"MailingStreet"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.mailingStreet=[[dataRows valueForKey:@"MailingStreet"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"MailingCity"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.mailingCity=[[dataRows valueForKey:@"MailingCity"] objectAtIndex:0];
@@ -130,44 +131,48 @@ NSDictionary *fields;
             }
             if ([[dataRows valueForKey:@"MobilePhone"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.mobileNumber=[[dataRows valueForKey:@"MobilePhone"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"Department"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.dateOfBirth=[[dataRows valueForKey:@"Department"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"OtherStreet"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.otherStreet=[[dataRows valueForKey:@"OtherStreet"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"otherCity"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.otherCity=[[dataRows valueForKey:@"otherCity"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"otherState"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.otherState=[[dataRows valueForKey:@"otherState"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"OtherPostalCode"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.otherZip=[[dataRows valueForKey:@"OtherPostalCode"] objectAtIndex:0];
-
+                
             }
             if ([[dataRows valueForKey:@"OtherCountry"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.otherCountry=[[dataRows valueForKey:@"OtherCountry"] objectAtIndex:0];
-
+                
             }
-            
-
-            [tableview reloadData];
         }
-        else{
-            if (UserId!=nil) {
+        [tableview reloadData];
 
-        SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:[NSString stringWithFormat:@"SELECT Id,FirstName,LastName,AssistantName,Title,MailingStreet,MailingCity,MailingState,MailingPostalCode,MailingCountry,Phone,MobilePhone,Email,Department,OtherStreet,OtherCity,OtherState,OtherPostalCode,OtherCountry FROM Contact WHERE Id='%@'",UserId]];
-        //WHERE DISTANCE(sureshper__LocationVal__c, GEOLOCATION(13.5146,80.6596), 'mi') < 50
-        [[SFRestAPI sharedInstance] send:request delegate:self];
-      }
-        }
+
+    }
+//        if (APP.offLineMode==YES) {
+//
+//        }
+//        else{
+//            if (UserId!=nil) {
+//
+//        SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:[NSString stringWithFormat:@"SELECT Id,FirstName,LastName,AssistantName,Title,MailingStreet,MailingCity,MailingState,MailingPostalCode,MailingCountry,Phone,MobilePhone,Email,Department,OtherStreet,OtherCity,OtherState,OtherPostalCode,OtherCountry FROM Contact WHERE Id='%@'",UserId]];
+//        //WHERE DISTANCE(sureshper__LocationVal__c, GEOLOCATION(13.5146,80.6596), 'mi') < 50
+//        [[SFRestAPI sharedInstance] send:request delegate:self];
+//      }
+//        }
     
 
 }
@@ -297,18 +302,20 @@ NSDictionary *fields;
         NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\",\"UId\":\"%@\",\"_soupEntryId\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry,UserId,SoupEntryId] JSONValue];
 //        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"Name\":\"%@ %@\"}",FirstName,LastName] JSONValue];
         
-        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\",\"_soupEntryId\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry,SoupEntryId] JSONValue];
-        NSError *error=nil;
+        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
         
         SFSmartStore *store = [SFSmartStore sharedStoreWithName:kDefaultSmartStoreName];
         if (fields) {
-            [store upsertEntries:[[NSArray alloc]initWithObjects:fieldsMerchandise, nil] toSoup:@"Merchandise" withExternalIdPath:@"_soupEntryId" error:&error ];
             if (contactEditFlag==YES) {
 
-            [store upsertEntries:[[NSArray alloc]initWithObjects:fields, nil] toSoup:@"ContactsEditQueue" withExternalIdPath:@"_soupEntryId" error:&error];
+            [store upsertEntries:[[NSArray alloc]initWithObjects:fieldsMerchandise, nil] toSoup:@"Merchandise"];
+
+            [store upsertEntries:[[NSArray alloc]initWithObjects:fields, nil] toSoup:@"ContactsEditQueue"];
             }
             else{
-                [store upsertEntries:[[NSArray alloc]initWithObjects:fields, nil] toSoup:@"ContactsQueue" withExternalIdPath:@"_soupEntryId" error:&error];
+                [store upsertEntries:[[NSArray alloc]initWithObjects:fieldsMerchandise, nil] toSoup:@"Merchandise"];
+
+                [store upsertEntries:[[NSArray alloc]initWithObjects:fields, nil] toSoup:@"ContactsQueue" ];
 
             }
         }
@@ -416,7 +423,7 @@ NSDictionary *fields;
         else if (indexPath.row==2) {
 
             [CurrentIndexPathArray addObject:indexPath];
-            [CellTitleLabel setText:@"account name"];
+            [CellTitleLabel setText:@"assistant name"];
 
         }
 
@@ -539,7 +546,7 @@ NSDictionary *fields;
                 editTextFeild.text=contactFieldValuesObj.accountName;
             }
             else{
-                editTextFeild.placeholder = @"account name";
+                editTextFeild.placeholder = @"assistant name";
                 
             }
             
@@ -870,10 +877,11 @@ NSDictionary *fields;
         [tableview setContentOffset:CGPointMake(0, pointInTableView.y-141) animated:YES];
         
     }
-    if (textField.tag==2) {
-        textField.inputView=AccountsView;
-    }
-    else if (textField.tag==12){
+//    if (textField.tag==2) {
+//        textField.inputView=AccountsView;
+//    }
+//    else
+        if (textField.tag==12){
         textField.inputView=DateView;
     }
     return YES;
