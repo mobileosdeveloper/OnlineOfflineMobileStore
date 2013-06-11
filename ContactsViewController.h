@@ -16,6 +16,7 @@
     IBOutlet UITableView *tableView;
     Reachability* internetReach;
 
+    UIRefreshControl *refreshControl;
 
 }
 

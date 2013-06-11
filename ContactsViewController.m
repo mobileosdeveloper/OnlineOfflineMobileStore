@@ -44,9 +44,22 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewContacts:)];
 
     // Do any additional setup after loading the view from its nib.
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [tableView addSubview:refreshControl];
 
 }
+-(void)handleRefresh:(id)sender
+{
+    [self Syncwithsalesforce];
+}
 -(void)viewWillAppear:(BOOL)animated{
+
+    [self Syncwithsalesforce];
+}
+
+-(void)Syncwithsalesforce
+{
     internetReach = [Reachability reachabilityForInternetConnection];
     [internetReach startNotifier];
     [self updateInterfaceWithReachability:internetReach];
@@ -59,21 +72,21 @@
     [queryDictionaryQueue setObject:@"Name" forKey:@"indexPath"];
     [queryDictionaryQueue setObject:@"ascending" forKey:@"order"];
     [queryDictionaryQueue setObject:[NSNumber numberWithInt:500] forKey:@"pageSize"];
-
+    
     if (APP.offLineMode) {
-
-  
+        
+        
         SFSoupQuerySpec *querySpec = [[SFSoupQuerySpec alloc] initWithDictionary:queryDictionaryQueue];
         SFSmartStore *store = [SFSmartStore sharedStoreWithName:kDefaultSmartStoreName];
-
+        
         NSArray *results = [store querySoup:@"Merchandise" withQuerySpec:querySpec pageIndex:0];
         
         self.dataRows = results;
         [tableView reloadData];
         [querySpec release];
-
-    
-
+        
+        
+        
     }
     
     else{
@@ -102,7 +115,7 @@
             
         }
         
-     
+        
         // Delete
         
         
@@ -123,7 +136,7 @@
             
         }
         
-      // Edit
+        // Edit
         
         NSArray *resultsEdit = [store querySoup:@"ContactsEditQueue" withQuerySpec:querySpec pageIndex:0];
         NSLog(@"results ContactsEditQueue %@",resultsEdit);
@@ -133,7 +146,7 @@
                 
                 NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"AssistantName\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Department\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",[object valueForKey:@"FirstName"],[object valueForKey:@"LastName"],[object valueForKey:@"Account"],[object valueForKey:@"Title"],[object valueForKey:@"MailingStreet"],[object valueForKey:@"MailingCity"],[object valueForKey:@"MailingState"],[object valueForKey:@"MailingPostalCode"],[object valueForKey:@"MailingCountry"],[object valueForKey:@"Phone"],[object valueForKey:@"MobilePhone"],[object valueForKey:@"Email"],[object valueForKey:@"Birthdate"],[object valueForKey:@"OtherStreet"],[object valueForKey:@"OtherCity"],[object valueForKey:@"OtherState"],[object valueForKey:@"OtherPostalCode"],[object valueForKey:@"OtherCountry"]] JSONValue];
                 NSLog(@"Values %@",fields);
-
+                
                 
                 SFRestRequest *requestEdit = [[SFRestAPI sharedInstance]requestForUpdateWithObjectType:@"Contact" objectId:[object valueForKey:@"Id"] fields:fields];
                 
@@ -143,22 +156,20 @@
             [store removeEntries:[resultsEdit valueForKey:@"_soupEntryId"] fromSoup:@"ContactsEditQueue"];
             
         }
-
         
-
         
-    SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:@"SELECT Id,FirstName,LastName,AssistantName,Title,MailingStreet,MailingCity,MailingState,MailingPostalCode,MailingCountry,Phone,MobilePhone,Email,Department,OtherStreet,OtherCity,OtherState,OtherPostalCode,OtherCountry FROM Contact"];
-    //WHERE DISTANCE(sureshper__LocationVal__c, GEOLOCATION(13.5146,80.6596), 'mi') < 50
-    [[SFRestAPI sharedInstance] send:request delegate:self];
+        
+        
+        SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:@"SELECT Id,FirstName,LastName,AssistantName,Title,MailingStreet,MailingCity,MailingState,MailingPostalCode,MailingCountry,Phone,MobilePhone,Email,Department,OtherStreet,OtherCity,OtherState,OtherPostalCode,OtherCountry FROM Contact"];
+        //WHERE DISTANCE(sureshper__LocationVal__c, GEOLOCATION(13.5146,80.6596), 'mi') < 50
+        [[SFRestAPI sharedInstance] send:request delegate:self];
         [querySpec release];
-
+        
     }
     
     [queryDictionaryQueue release];
 
-
 }
-
 -(void)addNewContacts:(id)sender{
     
         AddEditViewController *AddEditViewControllerObj=[[AddEditViewController alloc]init];
@@ -208,6 +219,9 @@
     
     self.dataRows = results;
     [tableView reloadData];
+    
+    [refreshControl endRefreshing];
+
     [queryDictionary release];
     [querySpec release];
     
@@ -243,17 +257,23 @@
     
     self.dataRows = results;
     [tableView reloadData];
+    [refreshControl endRefreshing];
+
     [queryDictionary release];
     [querySpec release];
 }
 
 - (void)requestDidCancelLoad:(SFRestRequest *)request {
     NSLog(@"requestDidCancelLoad: %@", request);
+    [refreshControl endRefreshing];
+
     //add your failed error handling here
 }
 
 - (void)requestDidTimeout:(SFRestRequest *)request {
     NSLog(@"requestDidTimeout: %@", request);
+    [refreshControl endRefreshing];
+
     //add your failed error handling here
 }
 
