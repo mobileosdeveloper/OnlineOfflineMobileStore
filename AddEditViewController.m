@@ -50,10 +50,10 @@ NSDictionary *fields;
     
     CurrentIndexPathArray=[[NSMutableArray alloc]init];
 
-    if (!contactEditFlag) {
+  //  if (!contactEditFlag) {
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addNewContacts:)];
 
-    }
+  //  }
 
     if (APP.offLineMode==NO) {
         
@@ -99,68 +99,72 @@ NSDictionary *fields;
         self.dataRows= [store retrieveEntries:[[NSArray alloc]initWithObjects:SoupEntryId, nil] fromSoup:@"Merchandise"];
         if ([dataRows count]>0) {
             NSLog(@"datarows %@",dataRows);
-            
-            if ([[dataRows valueForKey:@"FirstName"] objectAtIndex:0]!=NULL) {
+            NSLog(@" --- %@",[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"Title"] objectAtIndex:0]]);
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"FirstName"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.firstName=[[dataRows valueForKey:@"FirstName"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"LastName"] objectAtIndex:0]!=NULL) {
+
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"LastName"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.lastName=[[dataRows valueForKey:@"LastName"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"AssistantName"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"AssistantName"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.accountName=[[dataRows valueForKey:@"AssistantName"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"Title"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"Title"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.title=[[dataRows valueForKey:@"Title"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"MailingStreet"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"MailingStreet"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.mailingStreet=[[dataRows valueForKey:@"MailingStreet"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"MailingCity"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"MailingCity"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.mailingCity=[[dataRows valueForKey:@"MailingCity"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"MailingState"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"MailingState"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.mailingState=[[dataRows valueForKey:@"MailingState"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"MailingPostalCode"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"MailingPostalCode"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.mailingZip=[[dataRows valueForKey:@"MailingPostalCode"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"MailingCountry"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"MailingCountry"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.mailingCountry=[[dataRows valueForKey:@"MailingCountry"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"Phone"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"Phone"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.phoneNumber=[[dataRows valueForKey:@"Phone"] objectAtIndex:0];
             }
-            if ([[dataRows valueForKey:@"MobilePhone"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"MobilePhone"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.mobileNumber=[[dataRows valueForKey:@"MobilePhone"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"Department"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"Department"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.dateOfBirth=[[dataRows valueForKey:@"Department"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"OtherStreet"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"OtherStreet"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.otherStreet=[[dataRows valueForKey:@"OtherStreet"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"otherCity"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"otherCity"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.otherCity=[[dataRows valueForKey:@"otherCity"] objectAtIndex:0];
                 
+            }else{
+                contactFieldValuesObj.otherCity=NULL;
             }
-            if ([[dataRows valueForKey:@"otherState"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"otherState"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.otherState=[[dataRows valueForKey:@"otherState"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"OtherPostalCode"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"OtherPostalCode"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.otherZip=[[dataRows valueForKey:@"OtherPostalCode"] objectAtIndex:0];
                 
             }
-            if ([[dataRows valueForKey:@"OtherCountry"] objectAtIndex:0]!=NULL) {
+            if (![[NSString stringWithFormat:@"%@",[[dataRows valueForKey:@"OtherCountry"] objectAtIndex:0]]isEqual:@"<null>"]) {
                 contactFieldValuesObj.otherCountry=[[dataRows valueForKey:@"OtherCountry"] objectAtIndex:0];
                 
             }
         }
+
         [tableview reloadData];
 
 
@@ -302,20 +306,26 @@ NSDictionary *fields;
 
     
     if (APP.offLineMode) {
-        NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
-//        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"Name\":\"%@ %@\"}",FirstName,LastName] JSONValue];
-        
-        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
         
         SFSmartStore *store = [SFSmartStore sharedStoreWithName:kDefaultSmartStoreName];
-        if (fields) {
+      //  if (fields) {
             if (contactEditFlag==YES) {
+                NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\",\"Id\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry,UserId] JSONValue];
+                //        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"Name\":\"%@ %@\"}",FirstName,LastName] JSONValue];
+                
+                NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\",\"_soupEntryId\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry,SoupEntryId] JSONValue];
 
             [store upsertEntries:[[NSArray alloc]initWithObjects:fieldsMerchandise, nil] toSoup:@"Merchandise"];
 
             [store upsertEntries:[[NSArray alloc]initWithObjects:fields, nil] toSoup:@"ContactsEditQueue"];
             }
             else{
+                
+                NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
+                //        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"Name\":\"%@ %@\"}",FirstName,LastName] JSONValue];
+                
+                NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
+
                 [store upsertEntries:[[NSArray alloc]initWithObjects:fieldsMerchandise, nil] toSoup:@"Merchandise"];
 
                 [store upsertEntries:[[NSArray alloc]initWithObjects:fields, nil] toSoup:@"ContactsQueue" ];
@@ -323,7 +333,7 @@ NSDictionary *fields;
             }
         }
 
-    }
+   // }
     else{
         
         NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"AssistantName\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Department\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
@@ -524,7 +534,7 @@ NSDictionary *fields;
             
         
         if (editTextFeild.tag==0) {
-            if ( [contactFieldValuesObj.firstName isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.firstName length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.firstName;
             }
             else{
@@ -535,7 +545,7 @@ NSDictionary *fields;
         }
         else if (editTextFeild.tag==1) {
             
-            if ( [contactFieldValuesObj.lastName isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.lastName length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.lastName;
             }
             else{
@@ -545,7 +555,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==2) {
-            if ( [contactFieldValuesObj.accountName isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.accountName length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.accountName;
             }
             else{
@@ -556,7 +566,7 @@ NSDictionary *fields;
         }
         
         else if (editTextFeild.tag==3) {
-            if ( [contactFieldValuesObj.title isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.title length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.title;
             }
             else{
@@ -567,7 +577,7 @@ NSDictionary *fields;
         }
         
         else if (editTextFeild.tag==4) {
-            if ( [contactFieldValuesObj.mailingStreet isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.mailingStreet length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.mailingStreet;
             }
             else{
@@ -578,7 +588,7 @@ NSDictionary *fields;
         }
         
         else if (editTextFeild.tag==5) {
-            if ( [contactFieldValuesObj.mailingCity isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.mailingCity length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.mailingCity;
             }
             else{
@@ -589,7 +599,7 @@ NSDictionary *fields;
         }
         
         else if (editTextFeild.tag==6) {
-            if ( [contactFieldValuesObj.mailingState isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.mailingState length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.mailingState;
             }
             else{
@@ -600,7 +610,7 @@ NSDictionary *fields;
         }
         
         else if (editTextFeild.tag==7) {
-            if ( [contactFieldValuesObj.mailingZip isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ( [contactFieldValuesObj.mailingZip length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.mailingZip;
             }
             else{
@@ -610,7 +620,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==8) {
-            if ([contactFieldValuesObj.mailingCountry isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.mailingCountry length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.mailingCountry;
             }
             else{
@@ -620,7 +630,7 @@ NSDictionary *fields;
             
         }
         else if  (editTextFeild.tag==9) {
-            if ([contactFieldValuesObj.phoneNumber isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.phoneNumber length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.phoneNumber;
             }
             else{
@@ -630,7 +640,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==10) {
-            if ([contactFieldValuesObj.mobileNumber isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.mobileNumber length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.mobileNumber;
             }
             else{
@@ -640,7 +650,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==11) {
-            if ([contactFieldValuesObj.eMail isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.eMail length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.eMail;
             }
             else{
@@ -650,7 +660,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==12) {
-            if ([contactFieldValuesObj.dateOfBirth isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.dateOfBirth length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.dateOfBirth;
             }
             else{
@@ -660,7 +670,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==13) {
-            if ([contactFieldValuesObj.otherStreet isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.otherStreet length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.otherStreet;
             }
             else{
@@ -670,7 +680,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==14) {
-            if ([contactFieldValuesObj.otherCity isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.otherCity length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.otherCity;
             }
             else{
@@ -680,7 +690,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==15) {
-            if ([contactFieldValuesObj.otherState isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.otherState length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.otherState;
             }
             else{
@@ -690,7 +700,7 @@ NSDictionary *fields;
             
         }
         else if (editTextFeild.tag==16) {
-            if ([contactFieldValuesObj.otherZip isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.otherZip length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.otherZip;
             }
             else{
@@ -701,7 +711,7 @@ NSDictionary *fields;
         }
         
         else if (indexPath.row==17) {
-            if ([contactFieldValuesObj.otherCountry isKindOfClass:[NSString class]] && contactEditFlag==YES) {
+            if ([contactFieldValuesObj.otherCountry length] && contactEditFlag==YES) {
                 editTextFeild.text=contactFieldValuesObj.otherCountry;
             }
             else{
