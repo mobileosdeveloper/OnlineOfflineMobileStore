@@ -98,6 +98,7 @@ NSDictionary *fields;
         
         self.dataRows= [store retrieveEntries:[[NSArray alloc]initWithObjects:SoupEntryId, nil] fromSoup:@"Merchandise"];
         if ([dataRows count]>0) {
+            NSLog(@"datarows %@",dataRows);
             
             if ([[dataRows valueForKey:@"FirstName"] objectAtIndex:0]!=NULL) {
                 contactFieldValuesObj.firstName=[[dataRows valueForKey:@"FirstName"] objectAtIndex:0];

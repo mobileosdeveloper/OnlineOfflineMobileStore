@@ -72,25 +72,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "ContactsViewController.m"
-         timestampString = "392623156.779555"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "183"
-         endingLineNumber = "183"
-         landmarkName = "-request:didLoadResponse:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "AddEditViewController.m"
-         timestampString = "392618197.895824"
+         timestampString = "392624318.609747"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "279"
-         endingLineNumber = "279"
+         startingLineNumber = "280"
+         endingLineNumber = "280"
          landmarkName = "-addNewContacts:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ContactsViewController.m"
-         timestampString = "392623637.922309"
+         timestampString = "392624318.609747"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "318"
-         endingLineNumber = "318"
+         startingLineNumber = "319"
+         endingLineNumber = "319"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "AddEditViewController.m"
-         timestampString = "392618197.895824"
+         timestampString = "392624318.609747"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "303"
-         endingLineNumber = "303"
+         startingLineNumber = "304"
+         endingLineNumber = "304"
          landmarkName = "-addNewContacts:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,12 +112,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "AddEditViewController.m"
-         timestampString = "392618197.895824"
+         timestampString = "392624486.41842"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "310"
-         endingLineNumber = "310"
-         landmarkName = "-addNewContacts:"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "-ContactViewState:UserID:SoupEntryId:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
