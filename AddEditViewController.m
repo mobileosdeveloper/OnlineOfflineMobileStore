@@ -50,8 +50,10 @@ NSDictionary *fields;
     
     CurrentIndexPathArray=[[NSMutableArray alloc]init];
 
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addNewContacts:)];
+    if (!contactEditFlag) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(addNewContacts:)];
+
+    }
 
     if (APP.offLineMode==NO) {
         
@@ -299,7 +301,7 @@ NSDictionary *fields;
 
     
     if (APP.offLineMode) {
-        NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\",\"UId\":\"%@\",\"_soupEntryId\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry,UserId,SoupEntryId] JSONValue];
+        NSDictionary *fields = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
 //        NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"Name\":\"%@ %@\"}",FirstName,LastName] JSONValue];
         
         NSDictionary *fieldsMerchandise = [[NSString stringWithFormat:@"{\"FirstName\":\"%@\", \"LastName\":\"%@\",\"Account\":\"%@\", \"Title\":\"%@\",\"MailingStreet\":\"%@\", \"MailingCity\":\"%@\",\"MailingState\":\"%@\", \"MailingPostalCode\":\"%@\",\"MailingCountry\":\"%@\", \"Phone\":\"%@\",\"MobilePhone\":\"%@\", \"Email\":\"%@\",\"Birthdate\":\"%@\", \"OtherStreet\":\"%@\",\"OtherCity\":\"%@\", \"OtherState\":\"%@\",\"OtherPostalCode\":\"%@\",\"OtherCountry\":\"%@\"}",contactFieldValuesObj.firstName,contactFieldValuesObj.lastName,contactFieldValuesObj.accountName,contactFieldValuesObj.title,contactFieldValuesObj.mailingStreet,contactFieldValuesObj.mailingCity,contactFieldValuesObj.mailingState,contactFieldValuesObj.mailingZip,contactFieldValuesObj.mailingCountry,contactFieldValuesObj.phoneNumber,contactFieldValuesObj.mobileNumber,contactFieldValuesObj.eMail,contactFieldValuesObj.dateOfBirth,contactFieldValuesObj.otherStreet,contactFieldValuesObj.otherCity,contactFieldValuesObj.otherState,contactFieldValuesObj.otherZip,contactFieldValuesObj.otherCountry] JSONValue];
@@ -477,8 +479,8 @@ NSDictionary *fields;
         }
         else if (indexPath.row==12) {
  
-            [CurrentIndexPathArray addObject:indexPath];
-            [CellTitleLabel setText:@"date of birth"];
+            //[CurrentIndexPathArray addObject:indexPath];
+            [CellTitleLabel setText:@"department"];
 
         }
         else if (indexPath.row==13) {
@@ -515,7 +517,7 @@ NSDictionary *fields;
         }
     }
     NSArray *CellArray=cell.contentView.subviews;
-    NSLog(@"CellArray %@",CellArray);
+   // NSLog(@"CellArray %@",CellArray);
     for (UITextField *editTextFeild in CellArray) {
         if ([editTextFeild isKindOfClass:[UITextField class]]) {
             
@@ -651,7 +653,7 @@ NSDictionary *fields;
                 editTextFeild.text=contactFieldValuesObj.dateOfBirth;
             }
             else{
-                editTextFeild.placeholder = @"date of birth";
+                editTextFeild.placeholder = @"department";
                 
             }
             
@@ -877,13 +879,7 @@ NSDictionary *fields;
         [tableview setContentOffset:CGPointMake(0, pointInTableView.y-141) animated:YES];
         
     }
-//    if (textField.tag==2) {
-//        textField.inputView=AccountsView;
-//    }
-//    else
-        if (textField.tag==12){
-        textField.inputView=DateView;
-    }
+
     return YES;
 }
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
